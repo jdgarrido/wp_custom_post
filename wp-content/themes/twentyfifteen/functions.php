@@ -309,6 +309,34 @@ function twentyfifteen_search_form_modify( $html ) {
 }
 add_filter( 'get_search_form', 'twentyfifteen_search_form_modify' );
 
+function my_custom_post_seed() {
+  $labels = array(
+    'name'               => _x( 'Seeds', 'post type general name' ),
+    'singular_name'      => _x( 'Seed', 'post type singular name' ),
+    'add_new'            => _x( 'Add New', 'book' ),
+    'add_new_item'       => __( 'Add New Seed' ),
+    'edit_item'          => __( 'Edit Seed' ),
+    'new_item'           => __( 'New Seed' ),
+    'all_items'          => __( 'All Seeds' ),
+    'view_item'          => __( 'View Seed' ),
+    'search_items'       => __( 'Search Seeds' ),
+    'not_found'          => __( 'No products found' ),
+    'not_found_in_trash' => __( 'No products found in the Trash' ), 
+    'parent_item_colon'  => '',
+    'menu_name'          => 'Seeds'
+  );
+  $args = array(
+    'labels'        => $labels,
+    'description'   => 'Holds our products and product specific data',
+    'public'        => true,
+    'menu_position' => 5,
+    'supports'      => array( 'title', 'editor', 'thumbnail', 'excerpt', 'comments' ),
+    'has_archive'   => true,
+  );
+  register_post_type( 'seeds', $args ); 
+}
+add_action( 'init', 'my_custom_post_seed' );
+
 /**
  * Implement the Custom Header feature.
  *
