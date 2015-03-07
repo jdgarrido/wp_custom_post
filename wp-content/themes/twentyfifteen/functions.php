@@ -373,6 +373,29 @@ function my_contextual_help( $contextual_help, $screen_id, $screen ) {
 }
 add_action( 'contextual_help', 'my_contextual_help', 10, 3 );
 
+function my_taxonomies_seed() {
+	$labels = array(
+		'name'              => _x( 'Seed Banks', 'taxonomy general name' ),
+		'singular_name'     => _x( 'Seed Bank', 'taxonomy singular name' ),
+		'search_items'      => __( 'Search Seed Banks' ),
+		'all_items'         => __( 'All Seed Banks' ),
+		'parent_item'       => __( 'Parent Seed Bank' ),
+		'parent_item_colon' => __( 'Parent Seed Bank:' ),
+		'edit_item'         => __( 'Edit Seed Bank' ), 
+		'update_item'       => __( 'Update Seed Bank' ),
+		'add_new_item'      => __( 'Add New Seed Bank' ),
+		'new_item_name'     => __( 'New Seed Bank' ),
+		'menu_name'         => __( 'Seed Banks' ),
+	);
+	$args = array(
+		'labels' => $labels,
+		'hierarchical' => true,
+	);
+	register_taxonomy( 'bank', 'seeds', $args );
+}
+
+add_action( 'init', 'my_taxonomies_seed', 0 );
+
 /**
  * Implement the Custom Header feature.
  *
