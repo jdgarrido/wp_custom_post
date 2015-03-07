@@ -327,7 +327,7 @@ function my_custom_post_seed() {
   );
   $args = array(
     'labels'        => $labels,
-    'description'   => 'Holds our products and product specific data',
+    'description'   => 'Holds our products and seed specific data',
     'public'        => true,
     'menu_position' => 5,
     'supports'      => array( 'title', 'editor', 'thumbnail', 'excerpt', 'comments' ),
@@ -336,6 +336,25 @@ function my_custom_post_seed() {
   register_post_type( 'seeds', $args ); 
 }
 add_action( 'init', 'my_custom_post_seed' );
+
+function my_updated_messages( $messages ) {
+  global $post, $post_ID;
+  $messages['seeds'] = array(
+    0 => '', 
+    1 => sprintf( __('Seed updated. <a href="%s">View seed</a>'), esc_url( get_permalink($post_ID) ) ),
+    2 => __('Custom field updated.'),
+    3 => __('Custom field deleted.'),
+    4 => __('Seed updated.'),
+    5 => isset($_GET['revision']) ? sprintf( __('Seed restored to revision from %s'), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
+    6 => sprintf( __('Seed published. <a href="%s">View seed</a>'), esc_url( get_permalink($post_ID) ) ),
+    7 => __('Seed saved.'),
+    8 => sprintf( __('Seed submitted. <a target="_blank" href="%s">Preview seed</a>'), esc_url( add_query_arg( 'preview', 'true', get_permalink($post_ID) ) ) ),
+    9 => sprintf( __('Seed scheduled for: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Preview seed</a>'), date_i18n( __( 'M j, Y @ G:i' ), strtotime( $post->post_date ) ), esc_url( get_permalink($post_ID) ) ),
+    10 => sprintf( __('Seed draft updated. <a target="_blank" href="%s">Preview seed</a>'), esc_url( add_query_arg( 'preview', 'true', get_permalink($post_ID) ) ) ),
+  );
+  return $messages;
+}
+add_filter( 'post_updated_messages', 'my_updated_messages' );
 
 /**
  * Implement the Custom Header feature.
