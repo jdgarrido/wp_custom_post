@@ -356,6 +356,23 @@ function my_updated_messages( $messages ) {
 }
 add_filter( 'post_updated_messages', 'my_updated_messages' );
 
+function my_contextual_help( $contextual_help, $screen_id, $screen ) { 
+  if ( 'seeds' == $screen->id ) {
+
+    $contextual_help = '<h2>Seeds</h2>
+    <p>Seeds show the details of the items that we sell on the website. You can see a list of them on this page in reverse chronological order - the latest one we added is first.</p> 
+    <p>You can view/edit the details of each seed by clicking on its name, or you can perform bulk actions using the dropdown menu and selecting multiple items.</p>';
+
+  } elseif ( 'edit-seeds' == $screen->id ) {
+
+    $contextual_help = '<h2>Editing products</h2>
+    <p>This page allows you to view/modify seed details. Please make sure to fill out the available boxes with the appropriate details (product image, price, brand) and <strong>not</strong> add these details to the seed description.</p>';
+
+  }
+  return $contextual_help;
+}
+add_action( 'contextual_help', 'my_contextual_help', 10, 3 );
+
 /**
  * Implement the Custom Header feature.
  *
